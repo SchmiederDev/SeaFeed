@@ -17,8 +17,13 @@ public class FishCharacterStats : MonoBehaviour
     private float maxCharacterScale = 3f;
 
     [SerializeField]
-    private int seaStarsMax = 3;
+    private int seaStarsMax = 5;
+    public int SeaStarsMax { get { return seaStarsMax; } }
+
+    public int SeaStarsTotal { get; private set; }
     public int SeaStars { get; private set; }
+
+    public int CharacterLevel { get; private set; }
 
     public bool CharacterDied { get; private set; } = false;
 
@@ -33,7 +38,10 @@ public class FishCharacterStats : MonoBehaviour
 
     private void Awake()
     {
-        SeaStars = seaStarsMax;
+        SeaStarsTotal = 1;
+        SeaStars = SeaStarsTotal;
+        CharacterLevel = 1;
+        Debug.Log("Character level: " + CharacterLevel);
     }
 
     public void GetScorePoints(int points)
@@ -77,6 +85,15 @@ public class FishCharacterStats : MonoBehaviour
     {
         if (PlanktonScore >= growthThreshold)
         {
+            CharacterLevel++;
+
+            if (SeaStarsTotal < seaStarsMax)
+            {
+                SeaStarsTotal++;
+                SeaStars = SeaStarsTotal;
+                SeaFeedInterface.SeaFeed.StarContoller.AddSeaStar();
+            }
+
             float newCharacterScale = transform.localScale.x + growthRate;
 
             if (newCharacterScale <= maxCharacterScale)

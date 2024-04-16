@@ -42,13 +42,25 @@ public class SeaFeedInterface : MonoBehaviour
     {
         GameUIHandle = GameUI.GetComponent<MainCanvasHandle>();        
         
+        InitFishCharacter();
+        InitSeaStars();
+    }
+
+    private void InitFishCharacter()
+    {
         FishCharacter = fishCharacterGO.GetComponent<FishCharacterStats>();
         FishCharacter.OnPlanktonScoreChanged += GameUIHandle.UpdateScoreText;
-        
-        StarContoller = GetComponentInChildren<SeaStarController>();
-        FishCharacter.OnSeaStarsChanged += StarContoller.LooseSeaStar;
-
         FishCharacter.OnCharacterDeath += RestartGame;
+    }
+
+    private void InitSeaStars()
+    {
+        StarContoller = GetComponentInChildren<SeaStarController>();
+        for (int i = 0; i < FishCharacter.SeaStarsTotal; i++)
+        {
+            StarContoller.AddSeaStar();
+        }
+        FishCharacter.OnSeaStarsChanged += StarContoller.LooseSeaStar;
     }
 
     private void RestartGame()
