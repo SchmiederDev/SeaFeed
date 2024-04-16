@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e995404b26eb2342ad485f590be41ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growthThreshold: 1000
+  growthThreshold: 500
   growthRate: 0.1
   maxCharacterScale: 3
-  seaStarsMax: 3
+  seaStarsMax: 5
